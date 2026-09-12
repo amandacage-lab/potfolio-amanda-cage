@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amanda Cagé — Audiovisual & Criação</title>
+<meta name="description" content="Amanda Cagé — vídeo, fotografia, design e comunicação.">
+
+<!--
+  ======================================================================
+  COMO EDITAR ESTE SITE
+  ======================================================================
+  O site agora tem duas páginas:
+    - index.html      → apresentação (esta página)
+    - trabalhos.html  → vídeos, fotografia e design
+
+  Nesta página (index.html):
+  1. Sua foto pequena e os links de contato ficam no "const CONFIG = {"
+     no <script>, no fim do arquivo.
+  2. O texto "sobre" e a lista de experiências ficam na seção
+     <section id="sobre"> — pode editar o texto direto no HTML.
+  3. Para trocar vídeos, reels, fotos e artes, edite o CONFIG de
+     trabalhos.html.
+  ======================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<header class="nav">
+  <a href="#top" class="mark">Amanda Cagé</a>
+  <ul class="nav-links">
+    <li><a href="trabalhos.html">Trabalhos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <button class="toggle" id="panelToggle" aria-label="Abrir menu" aria-expanded="false"><span></span></button>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<nav class="panel" id="panel">
+  <button class="panel-close" id="panelClose" aria-label="Fechar">&times;</button>
+  <ul>
+    <li><a href="trabalhos.html">Trabalhos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO: só o nome -->
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <p class="eyebrow">Portfólio</p>
+    <h1>Amanda<br>Cagé</h1>
+    <p class="role">audiovisual, fotografia e design</p>
+    <p class="sub">Começando uma carreira em cinema — contando histórias com imagem, vídeo e cuidado.</p>
+    <a href="trabalhos.html" class="hero-cta">ver os trabalhos <span class="a">&rarr;</span></a>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="block" id="sobre">
+  <div class="block-head">
+    <span class="num">01</span>
+    <h2>Sobre</h2>
+  </div>
+  <div class="sobre-grid">
+    <div class="sobre-text">
+      <div class="sobre-mini">
+        <div class="sobre-photo" id="sobrePhoto"></div>
+        <p>Estou começando minha carreira em <em>cinema e audiovisual</em>, contando histórias com imagem e cuidado.</p>
+      </div>
+      <p>Pelo caminho, já trabalhei com produção de conteúdo, fotografia, design e comunicação — em projetos de mídia, robótica, eventos e marcas. O que eu mais gosto de fazer é transformar uma ideia em imagem.</p>
+    </div>
+    <ul class="exp-list">
+      <li>
+        <div class="org">Manna Roosters 7033</div>
+        <div class="role">Marketing e produção de conteúdo</div>
+      </li>
+      <li>
+        <div class="org">Ministério de Mídia</div>
+        <div class="role">Produção e comunicação</div>
+        <div class="when">desde 2022</div>
+      </li>
+      <li>
+        <div class="org">First Lego Girls</div>
+        <div class="role">Embaixadora — SUBMERGED e Unearthed</div>
+        <div class="when">2024–2026</div>
+      </li>
+      <li>
+        <div class="org">Off-Season FRC — Porto Alegre</div>
+        <div class="role">Produção de conteúdo</div>
+      </li>
+      <li>
+        <div class="org">Ateliê Eliane Cagé</div>
+        <div class="role">Comunicação, administrativo e atendimento</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="block contato" id="contato">
+  <div class="block-head">
+    <span class="num">02</span>
+    <h2>Vamos criar?</h2>
+  </div>
+  <div class="contact-links" id="contactLinks"></div>
+  <div class="foot">
+    <span>Amanda Cagé © <span id="year"></span></span>
+  </div>
+</section>
+
+<script>
+/* ======================================================================
+   CONFIG — troque aqui sua foto pequena e seus links de contato.
+   Vídeos, reels, fotos e artes agora ficam no CONFIG de trabalhos.html.
+   ====================================================================== */
+const CONFIG = {
+
+  photo: { src: "" },  // sua foto pequena na seção "Sobre" — ex: "images/amanda.jpg"
+
+  social: {
+    instagram:       "https://instagram.com/SEU_USUARIO",
+    instagramHandle: "@seu_usuario",
+    email:           "seuemail@exemplo.com",
+    whatsapp:        ""   // ex: "https://wa.me/55XXXXXXXXXXX" — vazio oculta
+  }
+};
+
+/* ====================================================================== */
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* --- scroll progress --- */
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progress.style.width = pct + '%';
+}, { passive:true });
+
+/* --- painel mobile --- */
+const panel = document.getElementById('panel');
+const scrim = document.getElementById('scrim');
+const panelToggle = document.getElementById('panelToggle');
+const panelClose = document.getElementById('panelClose');
+function openPanel(){ panel.classList.add('open'); scrim.classList.add('open'); panelToggle.setAttribute('aria-expanded','true'); }
+function closePanel(){ panel.classList.remove('open'); scrim.classList.remove('open'); panelToggle.setAttribute('aria-expanded','false'); }
+panelToggle.addEventListener('click', openPanel);
+panelClose.addEventListener('click', closePanel);
+scrim.addEventListener('click', closePanel);
+panel.querySelectorAll('a').forEach(a=>a.addEventListener('click', closePanel));
+
+/* --- foto pequena (seção Sobre) --- */
+(function buildSobrePhoto(){
+  const wrap = document.getElementById('sobrePhoto');
+  if(CONFIG.photo.src){
+    const img = document.createElement('img');
+    img.src = CONFIG.photo.src; img.alt = 'Amanda Cagé';
+    wrap.appendChild(img);
+  } else {
+    wrap.innerHTML = `<div class="ph">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+    </div>`;
+  }
+})();
+
+/* --- contato --- */
+(function buildContact(){
+  const wrap = document.getElementById('contactLinks');
+  const items = [
+    { label:'Instagram', href: CONFIG.social.instagram },
+    { label:'E-mail', href: 'mailto:'+CONFIG.social.email }
+  ];
+  if(CONFIG.social.whatsapp){ items.push({ label:'WhatsApp', href: CONFIG.social.whatsapp }); }
+  items.forEach(it=>{
+    const a = document.createElement('a');
+    a.href = it.href; a.target = '_blank'; a.rel = 'noopener';
+    a.innerHTML = `${it.label} <span class="a">&rarr;</span>`;
+    wrap.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>

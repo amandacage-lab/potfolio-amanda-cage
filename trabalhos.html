@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amanda Cagé — Trabalhos</title>
+<meta name="description" content="Amanda Cagé — vídeos, fotografia e design.">
+
+<!--
+  ======================================================================
+  COMO EDITAR ESTA PÁGINA
+  ======================================================================
+  1. Vá até "const CONFIG = {" no <script>, perto do fim do arquivo.
+  2. Troque ali: os vídeos, os reels, as fotos e as artes.
+  3. Para usar suas próprias imagens/vídeos, coloque os arquivos numa
+     pasta "images/" ao lado deste HTML e ajuste os caminhos.
+  ======================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="works-page">
+
+<div class="progress" id="progress"></div>
+
+<header class="nav">
+  <a href="index.html#top" class="mark">Amanda Cagé</a>
+  <ul class="nav-links">
+    <li><a href="index.html#top">Início</a></li>
+    <li><a href="#reel">Vídeos</a></li>
+    <li><a href="#fotografia">Fotografia</a></li>
+    <li><a href="#design">Design</a></li>
+    <li><a href="index.html#contato">Contato</a></li>
+  </ul>
+  <button class="toggle" id="panelToggle" aria-label="Abrir menu" aria-expanded="false"><span></span></button>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<nav class="panel" id="panel">
+  <button class="panel-close" id="panelClose" aria-label="Fechar">&times;</button>
+  <ul>
+    <li><a href="index.html#top">Início</a></li>
+    <li><a href="#reel">Vídeos</a></li>
+    <li><a href="#fotografia">Fotografia</a></li>
+    <li><a href="#design">Design</a></li>
+    <li><a href="index.html#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- ABERTURA DA PÁGINA -->
+<section class="works-hero">
+  <p class="eyebrow">Portfólio</p>
+  <h1>Trabalhos</h1>
+  <p>Vídeos, fotografia e design — o que já produzi até aqui.</p>
+</section>
+
+<!-- VÍDEOS -->
+<section class="block video-section" id="reel">
+  <div class="block-head">
+    <span class="num">01</span>
+    <h2>Vídeos</h2>
+    <p>Reel e produções recentes. Toque em um card para assistir.</p>
+  </div>
+  <div class="video-grid" id="videoGrid"></div>
+
+  <div class="sub-head">
+    <h3>Reels</h3>
+    <p>Formato vertical, do jeito que roda no Instagram. Arraste para o lado.</p>
+  </div>
+  <div class="reel-row" id="reelsStrip"></div>
+</section>
+
+<!-- FOTOGRAFIA -->
+<section class="block photo-section" id="fotografia">
+  <div class="block-head">
+    <span class="num">02</span>
+    <h2>Fotografia</h2>
+    <p>Registros e ensaios.</p>
+  </div>
+  <div class="photo-grid" id="photoGrid"></div>
+</section>
+
+<!-- DESIGN -->
+<section class="block design-section" id="design">
+  <div class="block-head">
+    <span class="num">03</span>
+    <h2>Design</h2>
+    <p>Peças gráficas e identidade visual.</p>
+  </div>
+  <div class="design-grid" id="designGrid"></div>
+</section>
+
+<div class="foot" style="padding:0 var(--edge) 60px;">
+  <a href="index.html#top" class="works-back">&larr; voltar para o início</a>
+  <span>Amanda Cagé © <span id="year"></span></span>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <div class="lightbox-frame" id="lightboxFrame"></div>
+    <div class="lightbox-cap">
+      <span id="lightboxTitle"></span>
+      <span id="lightboxRole"></span>
+    </div>
+  </div>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">&times;</button>
+</div>
+
+<script>
+/* ======================================================================
+   CONFIG — troque aqui seus vídeos, reels, fotos e artes.
+   ====================================================================== */
+const CONFIG = {
+
+  // type: "youtube" | "vimeo" | "file"
+  videos: [
+    { title:"Reel 2026", cat:"Vídeo", type:"youtube", id:"", poster:"" },
+    { title:"Projeto 2",  cat:"Vídeo", type:"youtube", id:"", poster:"" },
+    { title:"Projeto 3",  cat:"Vídeo", type:"youtube", id:"", poster:"" },
+    { title:"Projeto 4",  cat:"Vídeo", type:"youtube", id:"", poster:"" }
+  ],
+
+  // vídeos verticais / reels — type: "instagram" (cole o link do reel) | "youtube" | "vimeo" | "file"
+  reels: [
+    { title:"Reel", cat:"Instagram", type:"instagram", url:"", poster:"" },
+    { title:"Reel", cat:"Instagram", type:"instagram", url:"", poster:"" },
+    { title:"Reel", cat:"Instagram", type:"instagram", url:"", poster:"" },
+    { title:"Reel", cat:"Instagram", type:"instagram", url:"", poster:"" }
+  ],
+
+  photos: [
+    { src:"", alt:"Foto 1" }, { src:"", alt:"Foto 2" }, { src:"", alt:"Foto 3" },
+    { src:"", alt:"Foto 4" }, { src:"", alt:"Foto 5" }, { src:"", alt:"Foto 6" }
+  ],
+
+  designs: [
+    { src:"", alt:"Design 1" }, { src:"", alt:"Design 2" },
+    { src:"", alt:"Design 3" }, { src:"", alt:"Design 4" }
+  ]
+};
+
+/* ====================================================================== */
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* --- scroll progress --- */
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progress.style.width = pct + '%';
+}, { passive:true });
+
+/* --- painel mobile --- */
+const panel = document.getElementById('panel');
+const scrim = document.getElementById('scrim');
+const panelToggle = document.getElementById('panelToggle');
+const panelClose = document.getElementById('panelClose');
+function openPanel(){ panel.classList.add('open'); scrim.classList.add('open'); panelToggle.setAttribute('aria-expanded','true'); }
+function closePanel(){ panel.classList.remove('open'); scrim.classList.remove('open'); panelToggle.setAttribute('aria-expanded','false'); }
+panelToggle.addEventListener('click', openPanel);
+panelClose.addEventListener('click', closePanel);
+scrim.addEventListener('click', closePanel);
+panel.querySelectorAll('a').forEach(a=>a.addEventListener('click', closePanel));
+
+/* --- vídeos: cards grandes --- */
+function buildVideoGrid(){
+  const grid = document.getElementById('videoGrid');
+  CONFIG.videos.forEach((v, i)=>{
+    const card = document.createElement('div'); card.className = 'video-card';
+
+    const cover = document.createElement('div'); cover.className = 'cover';
+    if(v.poster){
+      const img = document.createElement('img'); img.src = v.poster; img.alt = v.title;
+      cover.appendChild(img);
+    } else {
+      cover.innerHTML = `<div class="ph"><strong>CAPA ${i+1}</strong><span>coloque a capa do vídeo aqui</span></div>`;
+    }
+    const play = document.createElement('div'); play.className = 'play';
+    play.innerHTML = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 4l15 8-15 8z"/></svg>';
+    cover.appendChild(play);
+
+    const meta = document.createElement('div'); meta.className = 'meta';
+    meta.innerHTML = `<h3>${v.title}</h3><div class="cat">${v.cat}</div>`;
+
+    card.appendChild(cover); card.appendChild(meta);
+    card.addEventListener('click', ()=> openLightbox(v));
+    grid.appendChild(card);
+  });
+}
+
+/* --- reels: cards verticais --- */
+function buildReels(){
+  const row = document.getElementById('reelsStrip');
+  CONFIG.reels.forEach((r, i)=>{
+    const card = document.createElement('div'); card.className = 'reel-card';
+
+    const cover = document.createElement('div'); cover.className = 'cover';
+    if(r.poster){
+      const img = document.createElement('img'); img.src = r.poster; img.alt = r.title;
+      cover.appendChild(img);
+    } else {
+      cover.innerHTML = `<div class="ph">REEL ${i+1}</div>`;
+    }
+    const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = r.cat || 'Reel';
+    cover.appendChild(tag);
+    const play = document.createElement('div'); play.className = 'play';
+    play.innerHTML = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 4l15 8-15 8z"/></svg>';
+    cover.appendChild(play);
+
+    card.appendChild(cover);
+    card.addEventListener('click', ()=> openLightbox(r));
+    row.appendChild(card);
+  });
+}
+
+/* --- fotografia / design: grades de imagem grande --- */
+function buildImageGrid(containerId, cardClass, items, label){
+  const grid = document.getElementById(containerId);
+  items.forEach((it, i)=>{
+    const card = document.createElement('div'); card.className = cardClass;
+    if(it.src){
+      const img = document.createElement('img'); img.src = it.src; img.alt = it.alt || '';
+      card.appendChild(img);
+    } else {
+      card.innerHTML = `<div class="ph">${label} ${i+1}</div>`;
+    }
+    grid.appendChild(card);
+  });
+}
+
+/* arrastar com o mouse na fileira de reels (o toque já funciona nativamente) */
+function enableDragScroll(el){
+  let isDown = false, startX, startScroll, moved;
+  el.addEventListener('pointerdown', e=>{
+    isDown = true; moved = false; el.classList.add('dragging');
+    startX = e.clientX; startScroll = el.scrollLeft;
+  });
+  window.addEventListener('pointerup', ()=>{ isDown = false; el.classList.remove('dragging'); });
+  el.addEventListener('pointerleave', ()=>{ isDown = false; el.classList.remove('dragging'); });
+  el.addEventListener('pointermove', e=>{
+    if(!isDown) return;
+    const dx = e.clientX - startX;
+    if(Math.abs(dx) > 4) moved = true;
+    el.scrollLeft = startScroll - dx;
+  });
+  el.addEventListener('click', e=>{ if(moved){ e.preventDefault(); e.stopPropagation(); } }, true);
+}
+
+buildVideoGrid();
+buildReels();
+buildImageGrid('photoGrid', 'photo-card', CONFIG.photos, 'FOTO');
+buildImageGrid('designGrid', 'design-card', CONFIG.designs, 'PEÇA');
+enableDragScroll(document.getElementById('reelsStrip'));
+
+/* --- lightbox --- */
+const lightbox = document.getElementById('lightbox');
+const lbFrame = document.getElementById('lightboxFrame');
+const lbTitle = document.getElementById('lightboxTitle');
+const lbRole = document.getElementById('lightboxRole');
+
+function openLightbox(v){
+  lbFrame.innerHTML = '';
+  lbFrame.classList.remove('vertical', 'insta');
+
+  if(v.type === 'instagram' && v.url){
+    lbFrame.classList.add('insta');
+    lbFrame.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${v.url}" data-instgrm-version="14" style="margin:0;width:100%;"></blockquote>`;
+    if(window.instgrm){
+      window.instgrm.Embeds.process();
+    } else {
+      const s = document.createElement('script');
+      s.src = 'https://www.instagram.com/embed.js'; s.async = true;
+      document.body.appendChild(s);
+    }
+  } else if(v.type === 'youtube' && v.id){
+    if(v.cat && /reel|insta/i.test(v.cat)) lbFrame.classList.add('vertical');
+    lbFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${v.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+  } else if(v.type === 'vimeo' && v.id){
+    if(v.cat && /reel|insta/i.test(v.cat)) lbFrame.classList.add('vertical');
+    lbFrame.innerHTML = `<iframe src="https://player.vimeo.com/video/${v.id}?autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="${v.title}"></iframe>`;
+  } else if(v.type === 'file' && v.src){
+    if(v.cat && /reel|insta/i.test(v.cat)) lbFrame.classList.add('vertical');
+    lbFrame.innerHTML = `<video src="${v.src}" controls autoplay playsinline></video>`;
+  } else {
+    lbFrame.innerHTML = `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8a8399;font-size:14px;text-align:center;padding:20px;">Adicione o link ou arquivo deste vídeo no CONFIG</div>`;
+  }
+  lbTitle.textContent = v.title; lbRole.textContent = v.cat;
+  lightbox.classList.add('open'); document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  lightbox.classList.remove('open'); lbFrame.innerHTML = ''; document.body.style.overflow = '';
+}
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e=>{ if(e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
